@@ -1,15 +1,12 @@
 import random
-import string
 from datetime import datetime
-import time
 
 def inputChar():
-    val = random.choice([(9, 10), (32, 47), (58, 64), (91, 126)])
-    return chr(random.randint(*val))
+    return random.choice("abcdefghijklmnopqrstuvwxyz!#$%&'()*+,-./:;<=>?@[\]^_`{|} ")
 
 def inputString():
     size = random.randint(5, 10)
-    return "".join(inputChar() for i in range(size))
+    return "".join(random.choice("abcdefghijklmnopqrstuvwxyz ") for _ in range(size))
 
 def testme():
     tcCount = 0
@@ -20,6 +17,9 @@ def testme():
         c = inputChar()
         s = inputString()
         print("Iteration ", tcCount, ": c = ", c, ", s = ", s, ", state = ", state)
+
+        # if tcCount > 2000:
+        #     break
 
         if c == '[' and state == 0:
             state = 1
@@ -39,18 +39,15 @@ def testme():
             state = 8
         if c == ']' and state == 8:
             state = 9
-        if s[0] == 'r' and s[1] == 'e' and s[2] == 's' and s[3] == 'e' and s[4] == 't' and s[5] == '\0'and state == 9:
+        if s[0] == 'r' and s[1] == 'e' and s[2] == 's' and s[3] == 'e' and s[4] == 't' and len(s) == 5 and state == 9:
+            end = datetime.now()
+            print("Run time:", end - start)
             print("error ")
             exit(200)
 
 def main():
-    start = datetime.now()
     random.seed(start)
-    # testme()
-    for _ in range(5):
-        print(inputChar())
+    testme()
 
-    end = datetime.now()
-    print("Run time:", end - start)
-
+start = datetime.now()
 main()
