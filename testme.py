@@ -1,9 +1,15 @@
+import random
+import string
+from datetime import datetime
+import time
 
 def inputChar():
-    return ' '
+    val = random.choice([(9, 10), (32, 47), (58, 64), (91, 126)])
+    return chr(random.randint(*val))
 
 def inputString():
-    return ''
+    size = random.randint(5, 10)
+    return "".join(inputChar() for i in range(size))
 
 def testme():
     tcCount = 0
@@ -12,7 +18,7 @@ def testme():
     while (1):
         tcCount += 1
         c = inputChar()
-        s += inputString()
+        s = inputString()
         print("Iteration ", tcCount, ": c = ", c, ", s = ", s, ", state = ", state)
 
         if c == '[' and state == 0:
@@ -36,3 +42,15 @@ def testme():
         if s[0] == 'r' and s[1] == 'e' and s[2] == 's' and s[3] == 'e' and s[4] == 't' and s[5] == '\0'and state == 9:
             print("error ")
             exit(200)
+
+def main():
+    start = datetime.now()
+    random.seed(start)
+    # testme()
+    for _ in range(5):
+        print(inputChar())
+
+    end = datetime.now()
+    print("Run time:", end - start)
+
+main()
