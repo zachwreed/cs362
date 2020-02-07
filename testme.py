@@ -1,12 +1,13 @@
 import random
 from datetime import datetime
+import string
 
 def inputChar():
-    return random.choice("abcdefghijklmnopqrstuvwxyz!#$%&'()*+,-./:;<=>?@[\]^_`{|} ")
+    return random.choice("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!#$%&'()*+,-./:;<=>?@[\]^_`{|} ")
 
 def inputString():
     size = random.randint(5, 10)
-    return "".join(random.choice("abcdefghijklmnopqrstuvwxyz ") for _ in range(size))
+    return "".join(random.choice("abcdefghijklmnopqrst") for _ in range(size))
 
 def testme():
     tcCount = 0
@@ -47,6 +48,7 @@ def testme():
 
 def main():
     random.seed(start)
+    # print(string.printable)
     testme()
 
 start = datetime.now()
