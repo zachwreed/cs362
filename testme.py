@@ -1,12 +1,12 @@
 import random
 from datetime import datetime
-import string
+# import string
 
 def inputChar():
-    return random.choice("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!#$%&'()*+,-./:;<=>?@[\]^_`{|} ")
+    return random.choice("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!\"#$%&'()*+,-./:;<=>?@[\]^_`{|}~} ")
 
 def inputString():
-    size = random.randint(5, 10)
+    size = random.randint(1, 10)
     return "".join(random.choice("abcdefghijklmnopqrst") for _ in range(size))
 
 def testme():
@@ -40,16 +40,15 @@ def testme():
             state = 8
         if c == ']' and state == 8:
             state = 9
-        if s[0] == 'r' and s[1] == 'e' and s[2] == 's' and s[3] == 'e' and s[4] == 't' and len(s) == 5 and state == 9:
+        if s == 'reset' and len(s) == 5 and state == 9:
             end = datetime.now()
-            print("Run time:", end - start)
+            # print("Run time:", end - start)
             print("error ")
             exit(200)
 
 def main():
-    random.seed(start)
-    # print(string.printable)
+    # random.seed(start)
     testme()
 
-start = datetime.now()
+# start = datetime.now()
 main()

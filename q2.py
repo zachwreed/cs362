@@ -2,8 +2,8 @@ import random
 import sys
 
 class Container:
-    maxelements = 0
-    elements = []
+    maxelements = 0 # max number of elements allowed in list
+    elements = []   # list for elements in container
 
 
 def create(container, maxelements):
@@ -24,7 +24,7 @@ def add(n, container):
 
 def inList(n, container):
      #returns 1 if n is in container and 0 if it’s not
-    if n in container:
+    if n in container.elements:
         return 1
 
     return 0
@@ -55,8 +55,53 @@ def size(container):
 
 
 def test_remove_removeAll():
-    print("none")
     #use all functions in library
+    container = None
+    count = 1000
+    container = create(container, count * 2)
+    list = [] # stores all added values
+
+    # --------------------------------------------------------
+    # Test remove
+    for i in count:
+        # add positive and negative i values
+        assert add(i, container) == 1
+        assert add(i * -1, container) == 1
+        assert inList(i, container) == 1
+        assert inList(i * -1, container) == 1
+        list.append(i)
+        list.append(i * -1)
+
+    # assert size is equal to count * 2
+    assert count * 2 == size(container)
+    assert list == count.elements
+
+    for i in count:
+        assert inList(i, container) == 1
+        assert inList(i * -1, container) == 1
+        assert remove(i, container) == 1
+        assert remove(i * -1, container) == 1
+
+    assert size(container) == 0
+
+    # --------------------------------------------------------
+    # test removeAll
+    list.clear()
+    # reinitialize container elements with duplicates of each i
+    for i in count:
+        duplicate = random.randint(1, 100)
+        list.append(duplicate)
+        # add i values to removeAll duplicate number of times
+        for j in duplicate:
+            assert add(i, container) == 1
+            assert inList(i, container) == 1
+
+
+    # assert count of duplicates removed is equal to number removed
+    for i in count:
+        assert list(i) == removeAll(i, container)
+        assert inList(i, container) == 0
+
 
 def test_add_remove():
     #boundary test for add and remove
@@ -65,29 +110,46 @@ def test_add_remove():
 
     # test case 1 
     # check all boundaries:
-    #  - 0, small negative & large negative, small & large positive 
     vals = [0, -1, -sys.maxsize, 1, 1 -sys.maxsize]
 
     i = 0
+    # add all vals to container
     for val in vals:
         if add(val, container) != 0:
             assert val == container.elements[i]
             i += 1
 
+    # assert len(elements) == len(vals)
     assert len(vals) == len(container.elements)
 
+    # remove the values added
     i = 0
     for val in vals:
         assert 1 == remove(val, container) 
         i += 1
-    
-    # assert i == len(vals) - 1
+
+    # assert number of removals == len(vals)
+    assert i == len(vals)
 
 def test_rand_add():
     #vals = [random.randint(1 -sys.maxsize, sys.maxsize), random.randint(1 -sys.maxsize, sys.maxsize)]
     #use add, remove, and inList
-    print("none")
 
+    # get a random value to loop
+    count = random.randint(1, sys.maxsize)
+    container = None
+    # only 1 element will be added, checked inList, and then removed in the loop
+    container = create(container, 1)
+
+    for i in count:
+        val = random.randint(-sys.maxsize, 1 -sys.maxsize)
+        # assert added and append to list
+        assert add(val, container) == 1
+        assert inList(val, container) == 1
+        assert remove(val, container) == 1
+
+    # assert no elements in list
+    assert len(container.elements) == 0
 
 def main():
     test_remove_removeAll()
